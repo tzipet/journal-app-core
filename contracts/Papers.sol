@@ -17,12 +17,12 @@ contract Papers {
   mapping(address => string) authorNames;
 
   function registerUser(string name) {
-  	authorNames[msg.sender] = name
+  	authorNames[msg.sender] = name;
   }
 
-  function createPaper(uint id,  string headline, string title, string imageUrl, string abstract) {
-  	authorName = authorNames[msg.sender];
-  	paper = Paper(id, headline, title, imageUrl, msg.sender, authorName, description);
+  function createPaper(uint id,  string headline, string title, string imageUrl, string description) {
+  	string memory authorName = authorNames[msg.sender];
+  	Paper memory paper = Paper(id, headline, title, imageUrl, msg.sender, description);
   	papers.push(paper);
   }
 
