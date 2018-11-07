@@ -14,19 +14,23 @@ contract Papers {
 
   Paper[] public papers;
 
-  mapping(address => string) authorNames;
+  mapping(address => string) public authorNames;
 
   function registerUser(string name) {
   	authorNames[msg.sender] = name;
   }
 
   function createPaper(uint id,  string headline, string title, string imageUrl, string description) {
-  	string memory authorName = authorNames[msg.sender];
   	Paper memory paper = Paper(id, headline, title, imageUrl, msg.sender, description);
   	papers.push(paper);
   }
 
-  function listPapers() {}
+
+  function countPapers() public returns (uint) {
+    return papers.length;
+  }
+
+  
 }
 
 
