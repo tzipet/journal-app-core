@@ -36,7 +36,17 @@ contract Papers {
   }
 
 
-  function buyPaper() public payable{
+  function buyPaper(uint id) public payable{
+
+    Paper storage paper = papers[id];
+
+    require(paper.price == msg.value);
+    require(paper.author != msg.sender);
+
+    paper.author.tranfer(msg.value);
+
+    paper.buyers.push(msg.sender);
+
 
 
   }
