@@ -10,6 +10,7 @@ contract Papers {
   	string imageUrl;
   	address author;
   	string description;
+    uint price;
     address[] buyers;
 
   }
@@ -23,9 +24,9 @@ contract Papers {
   	authorNames[msg.sender] = name;
   }
 
-  function createPaper(string headline, string title, string imageUrl, string description) {
+  function createPaper(string headline, string title, string imageUrl, string description, uint price) {
   	paperCounter++
-    Paper memory paper = Paper(paperCounter, headline, title, imageUrl, msg.sender, description);
+    Paper memory paper = Paper(paperCounter, headline, title, imageUrl, msg.sender, description, price);
     papers[id] = paper
   }
 
