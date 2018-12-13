@@ -25,9 +25,10 @@ contract Papers {
   }
 
   function createPaper(string headline, string title, string imageUrl, string description, uint price) {
-  	paperCounter++
-    Paper memory paper = Paper(paperCounter, headline, title, imageUrl, msg.sender, description, price);
-    papers[id] = paper
+  	paperCounter++;
+    address[] memory buyers;
+    Paper memory paper = Paper(paperCounter, headline, title, imageUrl, msg.sender, description, price, buyers);
+    papers[paperCounter] = paper;
   }
 
 
@@ -44,7 +45,7 @@ contract Papers {
     require(paper.author != msg.sender);
     require(!isBuyer(paper.id));
 
-    paper.author.tranfer(msg.value);
+    paper.author.transfer(msg.value);
 
     paper.buyers.push(msg.sender);
 
