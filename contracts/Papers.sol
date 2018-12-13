@@ -10,9 +10,12 @@ contract Papers {
   	string imageUrl;
   	address author;
   	string description;
+    address[] buyers;
+
   }
 
-  Paper[] public papers;
+  mapping (uint => Paper) public papers;
+  uint paperCounter;
 
   mapping(address => string) public authorNames;
 
@@ -20,17 +23,23 @@ contract Papers {
   	authorNames[msg.sender] = name;
   }
 
-  function createPaper(uint id,  string headline, string title, string imageUrl, string description) {
-  	Paper memory paper = Paper(id, headline, title, imageUrl, msg.sender, description);
-  	papers.push(paper);
+  function createPaper(string headline, string title, string imageUrl, string description) {
+  	paperCounter++
+    Paper memory paper = Paper(paperCounter, headline, title, imageUrl, msg.sender, description);
+    papers[id] = paper
   }
 
 
   function countPapers() public returns (uint) {
-    return papers.length;
+    return paperCounter;
   }
 
-  
+
+  function buyPaper() public payable{
+
+
+  }
+
 }
 
 
