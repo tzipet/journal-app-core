@@ -42,6 +42,7 @@ contract Papers {
 
     require(paper.price == msg.value);
     require(paper.author != msg.sender);
+    require(!isBuyer(paper.id));
 
     paper.author.tranfer(msg.value);
 
@@ -51,6 +52,15 @@ contract Papers {
 
   }
 
+  function isBuyer(uint id) public returns (bool) {
+    Paper storage paper = papers[id];
+    for(uint i=0; i < paper.buyers.length; i++) {
+      if (msg.sender == paper.buyers[i]) {
+        return true;
+      } 
+    }
+    return false;
+  }
 }
 
 
