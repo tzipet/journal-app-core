@@ -15,6 +15,8 @@ contract Papers {
 
   }
 
+  mapping(uint => string) private paperURLs;
+
   mapping (uint => Paper) public papers;
   uint paperCounter;
 
@@ -24,13 +26,19 @@ contract Papers {
   	authorNames[msg.sender] = name;
   }
 
-  function createPaper(string headline, string title, string imageUrl, string description, uint price) {
+  function createPaper(string headline, string title, string imageUrl, string description, uint price, string url) {
   	paperCounter++;
     address[] memory buyers;
     Paper memory paper = Paper(paperCounter, headline, title, imageUrl, msg.sender, description, price, buyers);
     papers[paperCounter] = paper;
+    paperURLs[paperCounter] = url;
   }
 
+
+  function getPaperURL(uint id) public returns string {
+    require(!isBuyer(id));
+    return paperURLs[id];
+  }
 
   function countPapers() public returns (uint) {
     return paperCounter;
