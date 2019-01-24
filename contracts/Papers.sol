@@ -35,7 +35,7 @@ contract Papers {
   }
 
 
-  function getPaperURL(uint id) public returns string {
+  function getPaperURL(uint id) public returns (string) {
     require(!isBuyer(id));
     return paperURLs[id];
   }
