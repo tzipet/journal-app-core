@@ -1,18 +1,15 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 contract Papers {
-  
   struct Paper {
-
-  	uint id;
-  	string headline;
-  	string title;
-  	string imageUrl;
-  	address author;
-  	string description;
+    uint id;
+    string headline;
+    string title;
+    string imageUrl;
+    address payable author;
+    string description;
     uint price;
     address[] buyers;
-
   }
 
   mapping(uint => string) private paperURLs;
@@ -22,20 +19,19 @@ contract Papers {
 
   mapping(address => string) public authorNames;
 
-  function registerUser(string name) {
-  	authorNames[msg.sender] = name;
+  function registerUser(string memory name) public {
+    authorNames[msg.sender] = name;
   }
 
-  function createPaper(string headline, string title, string imageUrl, string description, uint price, string url) {
-  	paperCounter++;
+  function createPaper(string memory headline, string memory title, string memory imageUrl, string memory description, uint price, string memory url) public {
+    paperCounter++;
     address[] memory buyers;
     Paper memory paper = Paper(paperCounter, headline, title, imageUrl, msg.sender, description, price, buyers);
     papers[paperCounter] = paper;
     paperURLs[paperCounter] = url;
   }
 
-
-  function getPaperURL(uint id) public returns (string) {
+  function getPaperURL(uint id) public returns (string memory) {
     require(!isBuyer(id));
     return paperURLs[id];
   }
@@ -43,7 +39,6 @@ contract Papers {
   function countPapers() public returns (uint) {
     return paperCounter;
   }
-
 
   function buyPaper(uint id) public payable{
 
@@ -56,9 +51,6 @@ contract Papers {
     paper.author.transfer(msg.value);
 
     paper.buyers.push(msg.sender);
-
-
-
   }
 
   function isBuyer(uint id) public returns (bool) {
